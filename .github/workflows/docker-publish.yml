@@ -56,5 +56,5 @@ jobs:
         with:
           context: .
           push: ${{ github.event_name != 'pull_request' }}
-          tags: guillaumeouint2/${{ env.IMAGE_NAME }}:latest
+          tags: guillaumeouint2/cloudflare_bgp_announcement_exporter:latest
           labels: ${{ steps.meta.outputs.labels }}
