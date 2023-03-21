@@ -58,10 +58,11 @@ jobs:
           push: ${{ github.event_name != 'pull_request' }}
           tags: ${{ env.IMAGE_NAME }}
           labels: ${{ steps.meta.outputs.labels }}
+          metadata: ${{ steps.meta.outputs.metadata }}
       - name: Sync readme
         uses: ms-jpq/sync-dockerhub-readme@v1
         with:
           username: "guillaumeouint2"
-          password: ${{ env.IMAGE_NAME }}
-          repository: <dockerhub name/repo>
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+          repository: ${{ env.IMAGE_NAME }}
           readme: "./README.md"
