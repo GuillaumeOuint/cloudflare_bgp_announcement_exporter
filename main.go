@@ -97,7 +97,6 @@ func fetchApiData() {
 			valueFloat, err := strconv.ParseFloat(value, 64)
 			if err != nil {
 				fmt.Println("Error converting value to float:", err)
-				time.Sleep(1 * time.Minute)
 				continue
 			}
 			apiResponseGauge.WithLabelValues(asn).Set(valueFloat)
