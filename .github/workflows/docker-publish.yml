@@ -16,7 +16,7 @@ on:
     branches: [ main ]
 
 env:
-  IMAGE_NAME: ${{ github.repository }}
+  IMAGE_NAME: guillaumeouint2/cloudflare_bgp_announcement_exporter:latest
   REGISTRY: docker.io
 
 jobs:
@@ -47,7 +47,7 @@ jobs:
         id: meta
         uses: docker/metadata-action@v3
         with:
-          images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
+          images: ${{ env.IMAGE_NAME }}
 
       # Build and push Docker image with Buildx (don't push on PR)
       # https://github.com/docker/build-push-action
@@ -56,5 +56,12 @@ jobs:
         with:
           context: .
           push: ${{ github.event_name != 'pull_request' }}
-          tags: guillaumeouint2/cloudflare_bgp_announcement_exporter:latest
+          tags: ${{ env.IMAGE_NAME }}
           labels: ${{ steps.meta.outputs.labels }}
+      - name: Sync readme
+        uses: ms-jpq/sync-dockerhub-readme@v1
+        with:
+          username: "guillaumeouint2"
+          password: ${{ env.IMAGE_NAME }}
+          repository: <dockerhub name/repo>
+          readme: "./README.md"
